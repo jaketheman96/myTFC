@@ -1,7 +1,7 @@
 FROM node:16.14-alpine
 WORKDIR /app-backend
 COPY . .
-EXPOSE 3001
 RUN npm install
+EXPOSE 3001
 ENTRYPOINT [ "npm" ]
 CMD [ "start" ]
