@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcryptjs';
 import Login from '../interface/login.interface';
 import Users from '../database/models/UsersModel';
 import token from '../utils/token';
@@ -10,9 +11,11 @@ export default class LoginService {
   }
 
   login = async (userInfos: Login) => {
-    const { email } = userInfos;
+    const { email, password } = userInfos;
     const user = await Users.findOne({ where: { email } });
-    if (!user) return { type: 'NOT_FOUND', message: 'User not found' };
+    if (!user) return 'UNAUTHORIZED';
+    const validation = await bcrypt.compare(password, user.password);
+    if (!validation) return 'UNAUTHORIZED';
     return { token: this._token };
   };
 }
