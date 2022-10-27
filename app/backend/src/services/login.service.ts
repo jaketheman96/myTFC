@@ -1,21 +1,25 @@
 import * as bcrypt from 'bcryptjs';
+import { JwtPayload } from 'jsonwebtoken';
 import Login from '../interface/login.interface';
 import Users from '../database/models/UsersModel';
-import token from '../utils/token';
+import t from '../utils/token';
+import JWT from '../utils/validateJWT';
 
 export default class LoginService {
-  private _token: string;
+  private token: string;
 
-  constructor(userInfos: Login) {
-    this._token = token.generateToken(userInfos);
-  }
-
-  login = async (userInfos: Login) => {
+  login = async (userInfos: Login) : Promise<object | string> => {
+    this.token = t.generateToken(userInfos);
     const { email, password } = userInfos;
     const user = await Users.findOne({ where: { email } });
     if (!user) return 'UNAUTHORIZED';
     const validation = await bcrypt.compare(password, user.password);
     if (!validation) return 'UNAUTHORIZED';
-    return { token: this._token };
+    return { token: this.token };
+  };
+
+  getUserRole = async (token: string) => {
+    const user = await JWT.validation(token) as JwtPayload;
+    return { role: user.role };
   };
 }
