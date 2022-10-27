@@ -4,7 +4,6 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
 import Users from '../database/models/UsersModel';
@@ -23,7 +22,7 @@ describe('Testes da rota login', () => {
   beforeEach(async () => {
     sinon
       .stub(Users, "findOne")
-      .resolves(loginMocks.user1 as Users);
+      .resolves(user1 as Users);
   });
 
   afterEach(() => {
