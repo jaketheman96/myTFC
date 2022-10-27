@@ -6,7 +6,7 @@ export default class TeamsService {
     return teams;
   };
 
-  getTeamById = async (id: number): Promise<object | string> => {
+  getTeamById = async (id: string): Promise<object | string> => {
     const team = await Teams.findOne({ where: { id } });
     if (!team) return 'NOT_FOUND';
     return team;
