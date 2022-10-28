@@ -70,6 +70,7 @@ describe('Testes da rota login', () => {
         password: user1.password,
       })
     expect(chaiHttpResponse.status).to.be.equal(401);
+    expect(JSON.parse(chaiHttpResponse.error.text).message).to.be.equal('Incorrect email or password')
   });
 
   it('Testa a rota get /login/validate', async () => {
