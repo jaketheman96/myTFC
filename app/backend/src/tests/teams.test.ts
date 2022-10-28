@@ -49,7 +49,7 @@ describe('Testes da rota /teams', () => {
       .get(`/teams/${teamId}`)
 
     expect(chaiHttpResponse.status).to.be.equal(200);
-    expect(chaiHttpResponse.body).to.be.equal(teamById)
+    expect(chaiHttpResponse.body.teamName).to.be.equal('Minas Brasília')
   });
 });
 
