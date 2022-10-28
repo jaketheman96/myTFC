@@ -13,4 +13,14 @@ const teams = [
   },
 ]
 
-export default { teams };
+const teamById = {
+  id: 10,
+  teamName: "Minas Brasília"
+}
+
+const team1 = {
+  id: 1,
+  team_name: 'Avaí/Kindermann',
+}
+
+export default { teams, teamById, team1 };
