@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-const { user1, loginSuccess, token } = loginMocks;
+const { user1, loginSuccess, token, wrongToken } = loginMocks;
 
 describe('Testes da rota login', () => {
 
@@ -88,6 +88,18 @@ describe('Testes da rota login', () => {
 
     expect(chaiHttpResponse.status).to.be.equal(200);
     expect(chaiHttpResponse.body.role).to.be.equal('admin')
+  });
+
+  it('Testa a rota get /login/validate com caso de erro', async () => {
+    sinon.stub(Users, "findOne").resolves(user1 as Users);
+
+    chaiHttpResponse = await chai
+      .request(app)
+      .get('/login/validate')
+      .set('authorization', wrongToken)
+
+    expect(chaiHttpResponse.status).to.be.equal(401);
+    expect(chaiHttpResponse.body.message).to.be.equal('INVALID_TOKEN')
   });
 });
 

@@ -13,4 +13,6 @@ const loginSuccess = {
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInBhc3N3b3JkIjoic2VjcmV0X2FkbWluIiwiaWF0IjoxNjY2OTA3NTk4fQ.VXZuMx6LZlMJzcadL3eTGvDIdBaPg7Lew9XWsGD1EhY'
 
-export default { user1, loginSuccess, token }
+const wrongToken = 'eyhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInBhc3N3b3JkIjoic2VjcmV0X2FkbWluIiwiaWF0IjoxNjY2OTA3NTk4fQ.VXZuMx6LZlMJzcadL3eTGvDIdBaPg7Lew9XWsGD1EhY'
+
+export default { user1, loginSuccess, token, wrongToken }
