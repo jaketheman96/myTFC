@@ -19,17 +19,13 @@ describe('Testes da rota login', () => {
 
   let chaiHttpResponse: Response;
 
-  beforeEach(async () => {
-    sinon
-      .stub(Users, "findOne")
-      .resolves(user1 as Users);
-  });
-
   afterEach(() => {
     (Users.findOne as sinon.SinonStub).restore();
   })
 
   it('Testa o caso de sucesso de login', async () => {
+    sinon.stub(Users, "findOne").resolves(user1 as Users);
+
     chaiHttpResponse = await chai
       .request(app)
       .post('/login')
@@ -40,6 +36,8 @@ describe('Testes da rota login', () => {
   });
 
   it('Testa o middleware de campos vazios do login', async () => {
+    sinon.stub(Users, "findOne").resolves();
+
     chaiHttpResponse = await chai
       .request(app)
       .post('/login')
@@ -51,6 +49,9 @@ describe('Testes da rota login', () => {
   });
 
   it('Testa o caso de erro com password invalido', async () => {
+    sinon.stub(Users, "findOne").resolves(user1 as Users);
+    // em caso de achar o user usando o findOne, porém com password inválido o stub precisa ter resolves...
+
     chaiHttpResponse = await chai
       .request(app)
       .post('/login')
@@ -59,11 +60,12 @@ describe('Testes da rota login', () => {
         password: 'xablau',
       })
     expect(chaiHttpResponse.status).to.be.equal(401);
-    expect(chaiHttpResponse.unauthorized).to.be.true
     expect(chaiHttpResponse.body.message).to.be.deep.equal('Incorrect email or password')
   });
 
   it('Testa o caso de erro com email invalido', async () => {
+    sinon.stub(Users, "findOne").resolves();
+
     chaiHttpResponse = await chai
       .request(app)
       .post('/login')
@@ -77,6 +79,8 @@ describe('Testes da rota login', () => {
   });
 
   it('Testa a rota get /login/validate', async () => {
+    sinon.stub(Users, "findOne").resolves(user1 as Users);
+
     chaiHttpResponse = await chai
       .request(app)
       .get('/login/validate')
