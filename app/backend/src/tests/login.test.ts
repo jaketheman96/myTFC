@@ -59,6 +59,8 @@ describe('Testes da rota login', () => {
         password: 'xablau',
       })
     expect(chaiHttpResponse.status).to.be.equal(401);
+    expect(chaiHttpResponse.unauthorized).to.be.true
+    expect(chaiHttpResponse.body.message).to.be.deep.equal('Incorrect email or password')
   });
 
   it('Testa o caso de erro com email invalido', async () => {
@@ -70,7 +72,8 @@ describe('Testes da rota login', () => {
         password: user1.password,
       })
     expect(chaiHttpResponse.status).to.be.equal(401);
-    expect(JSON.parse(chaiHttpResponse.error.text).message).to.be.equal('Incorrect email or password')
+    expect(chaiHttpResponse.unauthorized).to.be.true
+    expect(chaiHttpResponse.body.message).to.be.deep.equal('Incorrect email or password')
   });
 
   it('Testa a rota get /login/validate', async () => {
