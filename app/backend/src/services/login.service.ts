@@ -8,7 +8,7 @@ import JWT from '../utils/validateJWT';
 export default class LoginService {
   private token: string;
 
-  login = async (userInfos: Login) : Promise<object | string> => {
+  login = async (userInfos: Login): Promise<object | string> => {
     this.token = t.generateToken(userInfos);
     const { email, password } = userInfos;
     const user = await Users.findOne({ where: { email } });
@@ -18,8 +18,9 @@ export default class LoginService {
     return { token: this.token };
   };
 
-  getUserRole = async (token: string): Promise<object> => {
+  getUserRole = async (token: string): Promise<object | string> => {
     const user = await JWT.validation(token) as JwtPayload;
+    if (!user) return 'INVALID_TOKEN';
     return { role: user.role };
   };
 }

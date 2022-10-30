@@ -50,7 +50,7 @@ describe('Testes da rota login', () => {
 
   it('Testa o caso de erro com password invalido', async () => {
     sinon.stub(Users, "findOne").resolves(user1 as Users);
-    // em caso de achar o user usando o findOne, porém com password inválido o stub precisa ter resolves...
+    // em caso de achar o user usando o findOne, porém com password inválido, o stub precisa ter resolves...
 
     chaiHttpResponse = await chai
       .request(app)
