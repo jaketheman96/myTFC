@@ -49,7 +49,24 @@ describe('Testes da rota /teams', () => {
       .get(`/teams/${teamId}`)
 
     expect(chaiHttpResponse.status).to.be.equal(200);
-    expect(chaiHttpResponse.body.teamName).to.be.equal('Minas Brasília')
+    expect(chaiHttpResponse.body.teamName).to.be.deep.equal('Minas Brasília')
   });
 });
 
+describe('Testa erros na rota /teams/:id', () => {
+  let chaiHttpResponse: Response;
+
+  afterEach(() => {
+    (Teams.findOne as sinon.SinonStub).restore();
+  })
+
+  it('Verifica o retorno da function getTeamsById em caso de NOT_FOUND', async () => {
+    sinon.stub(Teams, "findOne").resolves();
+    chaiHttpResponse = await chai
+      .request(app)
+      .get(`/teams/999999`)
+  
+    expect(chaiHttpResponse.status).to.be.equal(404);
+    expect(chaiHttpResponse.body.message).to.be.deep.equal('Team not found')
+  });
+})
