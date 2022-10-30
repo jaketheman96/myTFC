@@ -20,9 +20,9 @@ export default class MatchesService {
     return matches;
   };
 
-  getMatchInProgress = async (): Promise<Array<object>> => {
+  getMatchInProgress = async (query: boolean): Promise<Array<object>> => {
     const matches = await Matches.findAll({
-      where: { inProgress: true },
+      where: { inProgress: query },
       include: [
         {
           model: Teams,
