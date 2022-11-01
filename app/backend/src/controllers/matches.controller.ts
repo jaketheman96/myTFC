@@ -17,7 +17,8 @@ export default class MatchesController {
   };
 
   createMatch = async (req: Request, res: Response): Promise<Response> => {
-    const addingMatch = await this.matches.createMatch(req.body);
+    const token = req.header('Authorization') as string;
+    const addingMatch = await this.matches.createMatch(req.body, token);
     if (addingMatch === 'Unprocessable Entity') {
       return res
         .status(422)

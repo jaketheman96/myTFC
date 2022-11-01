@@ -12,12 +12,10 @@ export default class LoginController {
     return res.status(200).json(response);
   };
 
-  getUserRole = async (req: Request, res: Response): Promise<Response> => {
-    const token: string = req.header('Authorization') as string;
+  getUserRole = async (req: Request, res: Response) => {
+    const token = req.header('Authorization') as string;
     const response = await this.loginService.getUserRole(token);
-    if (response === 'INVALID_TOKEN') {
-      return res.status(401).json({ message: response });
-    }
+    if (response === 'INVALID_TOKEN') return res.status(401).json(response);
     return res.status(200).json(response);
   };
 }

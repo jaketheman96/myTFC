@@ -1,9 +1,9 @@
 import * as bcrypt from 'bcryptjs';
-import { JwtPayload } from 'jsonwebtoken';
 import Login from '../interface/login.interface';
 import Users from '../database/models/UsersModel';
 import t from '../utils/token';
 import JWT from '../utils/validateJWT';
+import User from '../interface/user.interface';
 
 export default class LoginService {
   private token: string;
@@ -19,8 +19,7 @@ export default class LoginService {
   };
 
   getUserRole = async (token: string): Promise<object | string> => {
-    const user = await JWT.validation(token) as JwtPayload;
-    if (!user) return 'INVALID_TOKEN';
+    const user = await JWT.validation(token) as User;
     return { role: user.role };
   };
 }
