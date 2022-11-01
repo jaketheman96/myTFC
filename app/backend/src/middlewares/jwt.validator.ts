@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import Users from '../database/models/UsersModel';
 
 const secret = process.env.JWT_SECRET || 'suasenhasecreta';
-const tokenMessage = 'INVALID_TOKEN';
+const tokenMessage = 'Token must be a valid token';
 
 const validation = async (
   req: Request,

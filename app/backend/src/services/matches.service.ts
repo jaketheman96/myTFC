@@ -1,8 +1,11 @@
 import Teams from '../database/models/TeamsModel';
 import Matches from '../database/models/MatchesModel';
 import Imatches from '../interface/matches.interface';
+import TeamsService from './teams.service';
 
 export default class MatchesService {
+  private _teams = new TeamsService();
+
   getAllMatches = async (): Promise<Array<object>> => {
     const matches = await Matches.findAll({
       include: [
@@ -43,6 +46,9 @@ export default class MatchesService {
   createMatch = async (matchInfo: Imatches): Promise<object | string> => {
     const { awayTeam, homeTeam } = matchInfo;
     if (awayTeam === homeTeam) return 'Unprocessable Entity';
+    const team1 = await this._teams.getTeamById(JSON.stringify(awayTeam)) as object | string;
+    const team2 = await this._teams.getTeamById(JSON.stringify(homeTeam)) as object | string;
+    if (team1 === 'NOT_FOUND' || team2 === 'NOT_FOUND') return 'NOT_FOUND';
     const create = await Matches.create({ ...matchInfo, inProgress: true });
     return create;
   };

@@ -18,6 +18,9 @@ export default class MatchesController {
 
   createMatch = async (req: Request, res: Response): Promise<Response> => {
     const addingMatch = await this.matches.createMatch(req.body);
+    if (addingMatch === 'NOT_FOUND') {
+      return res.status(404).json({ message: 'There is no team with such id!' });
+    }
     if (addingMatch === 'Unprocessable Entity') {
       return res
         .status(422)
