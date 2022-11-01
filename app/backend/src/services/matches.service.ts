@@ -1,5 +1,6 @@
 import Teams from '../database/models/TeamsModel';
 import Matches from '../database/models/MatchesModel';
+import Imatches from '../interface/matches.interface';
 
 export default class MatchesService {
   getAllMatches = async (): Promise<Array<object>> => {
@@ -39,7 +40,9 @@ export default class MatchesService {
     return matches;
   };
 
-  createMatch = async (matchInfo: object): Promise<object> => {
+  createMatch = async (matchInfo: Imatches): Promise<object | string> => {
+    const { awayTeam, homeTeam } = matchInfo;
+    if (awayTeam === homeTeam) return 'Unprocessable Entity';
     const create = await Matches.create({ ...matchInfo, inProgress: true });
     return create;
   };

@@ -18,6 +18,11 @@ export default class MatchesController {
 
   createMatch = async (req: Request, res: Response): Promise<Response> => {
     const addingMatch = await this.matches.createMatch(req.body);
+    if (addingMatch === 'Unprocessable Entity') {
+      return res
+        .status(422)
+        .json({ message: 'It is not possible to create a match with two equal teams' });
+    }
     return res.status(201).json(addingMatch);
   };
 
