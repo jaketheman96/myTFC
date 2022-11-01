@@ -38,4 +38,9 @@ export default class MatchesService {
     });
     return matches;
   };
+
+  createMatch = async (matchInfo: object): Promise<object> => {
+    const update = await Matches.create({ ...matchInfo, inProgress: true });
+    return update;
+  };
 }

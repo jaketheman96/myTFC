@@ -91,7 +91,7 @@ describe('Testes da rota login', () => {
   });
 
   it('Testa a rota get /login/validate com caso de erro', async () => {
-    sinon.stub(Users, "findOne").resolves(user1 as Users);
+    sinon.stub(Users, "findOne").resolves();
 
     chaiHttpResponse = await chai
       .request(app)
