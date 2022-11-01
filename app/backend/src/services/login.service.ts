@@ -20,6 +20,7 @@ export default class LoginService {
 
   getUserRole = async (token: string): Promise<object | string> => {
     const user = await JWT.validation(token) as User;
+    if (!user) return 'INVALID_TOKEN';
     return { role: user.role };
   };
 }
