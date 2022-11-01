@@ -15,9 +15,9 @@ const validation = async (
     const { email } = jwt.verify(token, secret) as jwt.JwtPayload;
     const user = await Users.findOne({ where: { email } });
     if (!user) res.status(401).json({ message: tokenMessage });
-    return next(user);
+    return next();
   } catch (error) {
-    res.status(401).json({ message: tokenMessage });
+    return res.status(401).json({ message: tokenMessage });
   }
 };
 

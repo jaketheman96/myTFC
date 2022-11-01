@@ -1,7 +1,6 @@
 import Teams from '../database/models/TeamsModel';
 import Matches from '../database/models/MatchesModel';
 import Imatches from '../interface/matches.interface';
-import JWT from '../utils/validateJWT';
 
 export default class MatchesService {
   getAllMatches = async (): Promise<Array<object>> => {
@@ -41,10 +40,8 @@ export default class MatchesService {
     return matches;
   };
 
-  createMatch = async (matchInfo: Imatches, token: string): Promise<object | string> => {
+  createMatch = async (matchInfo: Imatches): Promise<object | string> => {
     const { awayTeam, homeTeam } = matchInfo;
-    const tokenValidation = JWT.validation(token);
-    if (!tokenValidation) return 'INVALID_TOKEN';
     if (awayTeam === homeTeam) return 'Unprocessable Entity';
     const create = await Matches.create({ ...matchInfo, inProgress: true });
     return create;
