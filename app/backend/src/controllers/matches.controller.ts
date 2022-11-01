@@ -20,4 +20,10 @@ export default class MatchesController {
     const addingMatch = await this.matches.createMatch(req.body);
     return res.status(201).json(addingMatch);
   };
+
+  finishMatch = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params;
+    const matchToFinish = await this.matches.finishMatch(id);
+    return res.status(200).json(matchToFinish);
+  };
 }

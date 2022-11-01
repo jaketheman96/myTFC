@@ -8,4 +8,6 @@ router.get('/', matchesController.getMatches);
 
 router.post('/', matchesController.createMatch);
 
+router.patch('/:id/finish', matchesController.finishMatch);
+
 export default router;
