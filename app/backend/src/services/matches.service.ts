@@ -60,4 +60,12 @@ export default class MatchesService {
     );
     return { message: 'finished' };
   };
+
+  updateMatch = async (matchInfo: Imatches, id: string): Promise<void> => {
+    const { homeTeamGoals, awayTeamGoals } = matchInfo;
+    await Matches.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+  };
 }

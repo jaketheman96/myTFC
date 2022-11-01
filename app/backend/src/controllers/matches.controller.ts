@@ -34,4 +34,10 @@ export default class MatchesController {
     const matchToFinish = await this.matches.finishMatch(id);
     return res.status(200).json(matchToFinish);
   };
+
+  updateMatch = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params;
+    await this.matches.updateMatch(req.body, id);
+    return res.status(200).json({ message: 'Resultado alterado com sucesso!' });
+  };
 }
